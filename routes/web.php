@@ -19,15 +19,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::group(['prefix' => 'admin'], function () {
-
-	Route::middleware(['auth'])->group(function () {
-
-		Route::get('home', 'HomeController@panel')->name('home');
+Route::prefix('admin')->group(function () {
+   		Route::get('home', 'HomeController@index');
 		Route::resource('users','UserController');
 		Route::resource('roles','RoleController');
 		Route::resource('permissions','PermissionController');
-		
-	});
-
 });
