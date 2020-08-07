@@ -50,7 +50,12 @@
                                     </li>
                                 @endif
                             @else
-                                <li class="nav-item dropdown">
+                                <li class="nav-item pt-2"><router-link class="nav-link" to="/">Welcome</router-link> </li>
+                                <li class="nav-item pt-2"><router-link class="nav-link" to="/home">Home</router-link> </li>
+                                <li class="nav-item pt-2"><router-link class="nav-link" to="/vip">Vip</router-link> </li>
+                                <li class="nav-item pt-2"><router-link class="nav-link" to="/premium">Premium</router-link> </li>
+
+                                <li class="nav-link dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }} <span class="caret"></span>
                                     </a>
