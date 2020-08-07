@@ -13,15 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('guest');
+Route::get('/', 'HomeController@spa');
 
 Auth::routes();
 
-Route::prefix('admin')->group(function () {
-   		Route::get('home', 'HomeController@index');
-		Route::resource('users','UserController');
-		Route::resource('roles','RoleController');
-		Route::resource('permissions','PermissionController');
-});

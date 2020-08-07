@@ -15,9 +15,7 @@
                     @endif
 
                     {{ __('You are logged in!') }} <hr>
-                    {{--vue component example in view home --}}
-                    <example-component></example-component>
-
+                    <router-view></router-view>
                 </div>
             </div>
         </div>
