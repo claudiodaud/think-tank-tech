@@ -13,7 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomeController@spa');
+Route::get('/{path?}', [
+    'uses' => 'HomeController@spa',
+    'as' => 'react',
+    'where' => ['path' => '.*']
+]);
 
 Auth::routes();
-

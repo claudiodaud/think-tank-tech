@@ -14,7 +14,4 @@ const mix = require('laravel-mix');
 mix.react('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
 
-mix.browserSync({
-    https: true,
-		port:8080
-});
+mix.browserSync({proxy: 'localhost:8000'});

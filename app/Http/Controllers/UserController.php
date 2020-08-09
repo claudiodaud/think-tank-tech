@@ -15,8 +15,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::get();
-
-        return $users;
+        $users2 = auth->user();
+        dd($users2);
+        return [$users, $users2];
     }
 
     /**

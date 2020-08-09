@@ -1,36 +1,66 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import User from "./User.js";
+import axios from "axios";
+// import Home from "./pages/Home.js"
+// import NotFound from "./pages/NotFound.js"
 
-function Example() {
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-    const users = [
-        {name: "Pedro", lastname: "Perez"},
-        {name: "Jose", lastname: "Perez"},
-        {name: "Antonio", lastname: "Perez"}
-    ]
+function Home(props) {
+    console.log("hola");
+    return <h1>Soy el home</h1>;
+}
 
+class Users extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            loading: true,
+            error: null,
+            users: undefined,
+        };
+    }
+
+    componentDidMount() {
+        axios.get("api/users").then((response) => {
+            this.setState({
+                users: response.data,
+            });
+        });
+    }
+
+    render() {
+        if (this.state.users.length > 0) {
+            return (
+                <ul>
+                    {this.state.users.map((user) => {
+                        <li>{`${user.name} - ${user.email}`}</li>;
+                    })}
+                </ul>
+            );
+        }
+
+        console.log("hola");
+        console.log(this.state.users);
+        return <h1>Somos los usuarios</h1>;
+    }
+}
+
+function App(props) {
     return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-header">Example Component</div>
-                        {
-                         users.map(({name,lastname}) => {
-                            return <User name={name} lastname={lastname} />
-                         })   
-                        }
-                        <div className="card-body">REACT component!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/users" component={Users} />
+            </Switch>
+        </BrowserRouter>
     );
 }
 
-export default Example;
+export default App;
 
 if (document.getElementById("example")) {
-    ReactDOM.render(<Example />, document.getElementById("example"));
+    ReactDOM.render(<App />, document.getElementById("example"));
 }
