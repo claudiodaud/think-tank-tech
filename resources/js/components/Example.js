@@ -19,7 +19,7 @@ class Users extends Component {
         this.state = {
             loading: true,
             error: null,
-            users: undefined,
+            users: [],
         };
     }
 
@@ -32,7 +32,10 @@ class Users extends Component {
     }
 
     render() {
-        if (this.state.users.length > 0) {
+
+        console.log("users: ", this.state.users);
+        if (this.state.users.length > 1) {
+            console.log("entreee")
             return (
                 <ul>
                     {this.state.users.map((user) => {
@@ -41,9 +44,6 @@ class Users extends Component {
                 </ul>
             );
         }
-
-        console.log("hola");
-        console.log(this.state.users);
         return <h1>Somos los usuarios</h1>;
     }
 }

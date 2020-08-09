@@ -69912,7 +69912,7 @@ var Users = /*#__PURE__*/function (_Component) {
     _this.state = {
       loading: true,
       error: null,
-      users: undefined
+      users: []
     };
     return _this;
   }
@@ -69922,7 +69922,7 @@ var Users = /*#__PURE__*/function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('api/users').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("api/users").then(function (response) {
         _this2.setState({
           users: response.data
         });
@@ -69931,8 +69931,16 @@ var Users = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      console.log("users: ", this.state.users);
+
+      if (this.state.users.length > 1) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.users.map(function (user) {
+          /*#__PURE__*/
+          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "".concat(user.name, " - ").concat(user.email));
+        }));
+      }
+
       console.log("hola");
-      console.log(this.state.users);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Somos los usuarios");
     }
   }]);
