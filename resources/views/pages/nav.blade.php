@@ -26,9 +26,9 @@
                         </li>
                     @endif
                 @else
-                    <li class="nav-item pt-2"><router-link class="nav-link" to="/users">Usuarios</router-link> </li>
-                    <li class="nav-item pt-2"><router-link class="nav-link" to="/roles">Roles</router-link> </li>
-                    <li class="nav-item pt-2"><router-link class="nav-link" to="/permissions">Permisos</router-link> </li>
+                    <li class="nav-item pt-2"><a class="nav-link" href="/users">Usuarios</a> </li>
+                    <li class="nav-item pt-2"><a class="nav-link" href="/roles">Roles</a> </li>
+                    <li class="nav-item pt-2"><a class="nav-link" href="permissions">Permisos</a> </li>
                    
                     <li class="nav-link dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
