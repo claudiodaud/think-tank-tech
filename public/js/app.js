@@ -69934,13 +69934,14 @@ var Users = /*#__PURE__*/function (_Component) {
       console.log("users: ", this.state.users);
 
       if (this.state.users.length > 1) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.users.map(function (user) {
-          /*#__PURE__*/
-          react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "".concat(user.name, " - ").concat(user.email));
-        }));
+        console.log("entreee");
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "User data"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, this.state.users.map(function (user) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+            key: user.id
+          }, user.name, " | ", user.email);
+        })));
       }
 
-      console.log("hola");
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Somos los usuarios");
     }
   }]);

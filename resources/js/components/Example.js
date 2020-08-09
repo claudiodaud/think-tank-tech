@@ -32,16 +32,18 @@ class Users extends Component {
     }
 
     render() {
-
         console.log("users: ", this.state.users);
         if (this.state.users.length > 1) {
-            console.log("entreee")
+            console.log("entreee");
             return (
-                <ul>
-                    {this.state.users.map((user) => {
-                        <li>{`${user.name} - ${user.email}`}</li>;
-                    })}
-                </ul>
+                <section>
+                    <h1>User data</h1>
+                    <ul>
+                        {this.state.users.map((user) => {
+                            return <li key={user.id}>{user.name} | {user.email}</li>
+                        })}
+                    </ul>
+                </section>
             );
         }
         return <h1>Somos los usuarios</h1>;
