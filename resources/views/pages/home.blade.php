@@ -19,7 +19,9 @@
                 </div>
 
             </div> <hr>
+            
             <div id="example"></div>
+            
         </div>
     </div>
 </div>

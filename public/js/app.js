@@ -65790,6 +65790,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+// components
 
 
 __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");

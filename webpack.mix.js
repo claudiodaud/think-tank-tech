@@ -14,4 +14,5 @@ const mix = require('laravel-mix');
 mix.react('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');
 
-mix.browserSync('http://thinktank.tester');
+mix.browserSync({  proxy: 'localhost:8000', port: 8080 });
+	
