@@ -16,8 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'DESC')->paginate(2);
-        //enviar los roles y permisos asociaados a los usuarios.
+        $users = User::orderBy('id', 'DESC')->paginate(2)->permissions();
+        $usersRolePermissions = User::role()->get();
+        dd($users);
+            //enviar los roles y permisos asociaados a los usuarios.
         $roles = Role::get();
         $permissions = Permission::get();
         $userstrashed = User::orderBy('id', 'DESC')->onlyTrashed()->get();
