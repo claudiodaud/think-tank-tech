@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -15,8 +17,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::orderBy('id', 'DESC')->paginate(2);
+        //enviar los roles y permisos asociaados a los usuarios.
+        $roles = Role::get();
+        $permissions = Permission::get();
         $userstrashed = User::orderBy('id', 'DESC')->onlyTrashed()->get();
-
+        
         return [
             'pagination' => [
                 'total'         => $users->total(),
@@ -27,7 +32,9 @@ class UserController extends Controller
                 'to'            => $users->lastItem(),
             ],
             'users' => $users,
-            'userstrashed' => $userstrashed
+            'userstrashed' => $userstrashed,
+            'roles' => $roles,
+            'permissions' => $permissions,
         ];
     }
 
@@ -63,6 +70,9 @@ class UserController extends Controller
             $user->email    = $request->input('email');
             $user->password = bcrypt($request->input('password'));
             $user->save();
+
+            $user->roles()->sync($request->role);
+            $user->roles()->sync($request->permissions);
             
                   
             return true;
@@ -107,7 +117,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+       if (isset($request)) {
+            $this->validate($request, [
             'name' => 'required',
             'email' => 'required',
             'password' => 'required'
@@ -115,7 +126,9 @@ class UserController extends Controller
 
         User::find($id)->update($request->all());
 
-        return;
+        return true;
+       }
+      return false;
     }
 
     /**
@@ -128,6 +141,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+
+        return true;
     }
      /**
      * Remove the specified resource from storage.
@@ -139,6 +154,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->restore();
+
+        return true;
     }
 
     /**
@@ -151,6 +168,8 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->forceDelete();
+
+        return true;
     }
 
 
