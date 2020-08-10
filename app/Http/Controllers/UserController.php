@@ -74,7 +74,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Rol::get();
-        $permissions = Permissions::get()
+        $permissions = Permissions::get();
         
         return [$user, $roles, $permissions];
     }
