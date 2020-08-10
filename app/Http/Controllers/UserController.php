@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 
-
 class UserController extends Controller
 {
     /**
@@ -38,7 +37,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       if (isset($request)) {
+           // create a new user object
+        $user           = new User;
+        $user->name     = $request->input('name');
+        $user->email    = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
+        
+              
+        return true;
+       }
+
+       return false; 
     }
 
     /**
@@ -49,7 +60,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return $user;
     }
 
     /**
@@ -60,7 +72,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $roles = Rol::get();
+        $permissions = Permissions::get()
+        
+        return [$user, $roles, $permissions];
     }
 
     /**
