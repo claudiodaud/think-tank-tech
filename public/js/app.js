@@ -70011,8 +70011,8 @@ var User = function User(props) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/daniel/Documents/profesional/liberal/think-tank-tech/think-tank-tech/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/daniel/Documents/profesional/liberal/think-tank-tech/think-tank-tech/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\ThinkTank\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\ThinkTank\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

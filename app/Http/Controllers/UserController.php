@@ -14,9 +14,21 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
-        
-        return $users;
+        $users = User::orderBy('id', 'DESC')->paginate(2);
+        $userstrashed = User::orderBy('id', 'DESC')->onlyTrashed()->get();
+
+        return [
+            'pagination' => [
+                'total'         => $users->total(),
+                'current_page'  => $users->currentPage(),
+                'per_page'      => $users->perPage(),
+                'last_page'     => $users->lastPage(),
+                'from'          => $users->firstItem(),
+                'to'            => $users->lastItem(),
+            ],
+            'users' => $users,
+            'userstrashed' => $userstrashed
+        ];
     }
 
     /**
@@ -38,18 +50,26 @@ class UserController extends Controller
     public function store(Request $request)
     {
        if (isset($request)) {
-           // create a new user object
-        $user           = new User;
-        $user->name     = $request->input('name');
-        $user->email    = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
-        
-              
-        return true;
+
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required',
+                'password' => 'required'
+            ]);
+
+            // create a new user object
+            $user           = new User;
+            $user->name     = $request->input('name');
+            $user->email    = $request->input('email');
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+            
+                  
+            return true;
        }
 
        return false; 
+      
     }
 
     /**
@@ -73,10 +93,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        $roles = Rol::get();
-        $permissions = Permissions::get();
         
-        return [$user, $roles, $permissions];
+        
+        return $user ;
     }
 
     /**
@@ -88,7 +107,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+
+        User::find($id)->update($request->all());
+
+        return;
     }
 
     /**
@@ -99,6 +126,32 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
     }
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $user = User::findOrFail($id);
+        $user->restore();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function forcedelete($id)
+    {
+        $user = User::findOrFail($id);
+        $user->forceDelete();
+    }
+
+
 }
