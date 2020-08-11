@@ -22,11 +22,11 @@ class UserController extends Controller
     public function index()
     {
         //send user and his relationships
-        $users = User::with(['roles','permissions'])->orderBy('id', 'Asc')->paginate(10);
-        
+        $users = User::with('roles.permissions','permissions')->orderBy('id', 'Asc')->paginate(10);
+     
         //send roles and permissions
-        $roles = Role::get();
-        $permissions = Permission::get();
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::with('roles')->get();
         
         
         //send disabled user 

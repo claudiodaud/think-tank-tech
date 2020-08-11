@@ -17,7 +17,7 @@ class RoleController extends Controller
     public function index()
     {
         
-        $roles = Role::with(['users','permissions'])->orderBy('id', 'Asc')->paginate(10);
+        $roles = Role::with('users','permissions')->orderBy('id', 'Asc')->paginate(10);
         $rolestrashed = Role::orderBy('id', 'DESC')->onlyTrashed()->get();
 
         return [

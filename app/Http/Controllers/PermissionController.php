@@ -16,7 +16,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        $permissions = Permission::with(['users','roles'])->orderBy('id', 'Asc')->paginate(10);
+        $permissions = Permission::with('users','roles')->orderBy('id', 'Asc')->paginate(10);
         $permissionstrashed = Permission::orderBy('id', 'DESC')->onlyTrashed()->get();
 
         return [
