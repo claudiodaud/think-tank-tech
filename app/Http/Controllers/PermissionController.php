@@ -119,6 +119,9 @@ class PermissionController extends Controller
 
         Permission::find($id)->update($request->all());
 
+        $user->roles()->sync($request->role);
+        $user->roles()->sync($request->users);
+
         return true;
        }
       return false;

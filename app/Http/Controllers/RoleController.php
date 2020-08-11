@@ -121,6 +121,9 @@ class RoleController extends Controller
 
         Role::find($id)->update($request->all());
 
+        $user->roles()->sync($request->users);
+        $user->roles()->sync($request->permissions);
+
         return true;
        }
       return false;

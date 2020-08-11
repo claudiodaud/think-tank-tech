@@ -137,6 +137,10 @@ class UserController extends Controller
 
         User::find($id)->update($request->all());
 
+        $user->roles()->sync($request->role);
+        $user->roles()->sync($request->permissions);
+            
+
         return true;
        }
       return false;
