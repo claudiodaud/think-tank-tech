@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+
+
 use App\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class UserController extends Controller
 {
+   
+
     /**
      * Display a listing of the resource.
      *
@@ -16,14 +21,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'DESC')->paginate(2)->permissions();
-        $usersRolePermissions = User::role()->get();
-        dd($users);
-            //enviar los roles y permisos asociaados a los usuarios.
+        //send user and his relationships
+        $users = User::with(['roles','permissions'])->orderBy('id', 'Asc')->paginate(10);
+        
+        //send roles and permissions
         $roles = Role::get();
         $permissions = Permission::get();
+        
+        
+        //send disabled user 
         $userstrashed = User::orderBy('id', 'DESC')->onlyTrashed()->get();
         
+        //send pagination array
         return [
             'pagination' => [
                 'total'         => $users->total(),
@@ -36,7 +45,7 @@ class UserController extends Controller
             'users' => $users,
             'userstrashed' => $userstrashed,
             'roles' => $roles,
-            'permissions' => $permissions,
+            'permissions' => $permissions
         ];
     }
 

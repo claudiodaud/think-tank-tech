@@ -17,6 +17,7 @@ Route::get('/{path?}', [
     'uses' => 'HomeController@spa',
     'as' => 'react',
     'where' => ['path' => '.*']
+   
 ]);
 
 Auth::routes();

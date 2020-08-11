@@ -2,19 +2,20 @@
 
 namespace App;
 
-use App\Permission;
-use App\Role;
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Traits\HasPermissions;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 
 class User extends Authenticatable
 {
-    use Notifiable, HasRoles, HasPermissions,SoftDeletes;
+    use Notifiable, HasRoles, HasPermissions, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -43,12 +44,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
-    {
-        return $this->hasMany('Spatie\Permission\Models\Role');
-    }
-    public function permissions()
-    {
-        return $this->hasMany('Spatie\Permission\Models\Permission');
-    }
+
+  
 }
