@@ -19,17 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//users routes
-Route::resource('users','UserController');
-Route::delete('users/{user}/forcedelete','UserController@forcedelete');
-Route::delete('users/{user}/restore','UserController@restore');
 
-//roles routes
-Route::resource('roles','RoleController');
-Route::delete('roles/{role}/forcedelete','RoleController@forcedelete');
-Route::delete('roles/{role}/restore','RoleController@restore');
 
-//permissions routes
-Route::resource('permissions','PermissionController');
-Route::delete('permission/{permission}/forcedelete','PermissionController@forcedelete');
-Route::delete('permission/{permission}/restore','PermissionController@restore');
+Route::middleware(['auth:sanctum'])->group(function () {
+ 	 //users routes
+	Route::resource('users','UserController');
+	Route::delete('users/{user}/forcedelete','UserController@forcedelete');
+	Route::delete('users/{user}/restore','UserController@restore');
+
+	//roles routes
+	Route::resource('roles','RoleController');
+	Route::delete('roles/{role}/forcedelete','RoleController@forcedelete');
+	Route::delete('roles/{role}/restore','RoleController@restore');
+
+	//permissions routes
+	Route::resource('permissions','PermissionController');
+	Route::delete('permission/{permission}/forcedelete','PermissionController@forcedelete');
+	Route::delete('permission/{permission}/restore','PermissionController@restore');
+});
