@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function spa()
     {
-        return view('pages.home');
+        return view('layouts.app');
        
     }
 }

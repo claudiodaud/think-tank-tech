@@ -21,7 +21,7 @@ Route::get('/{path?}', [
     'as' => 'react',
     'where' => ['path' => '.*']
    
-]);
+])->middleware('auth');
 
 
 
