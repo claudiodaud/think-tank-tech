@@ -15,8 +15,7 @@ class UserController extends Controller
    
     public function __construct()
     {
-           
-           $this->middleware('auth');
+          $this->middleware('auth');
     }
     
      
@@ -28,8 +27,7 @@ class UserController extends Controller
         //send roles and permissions
         $roles = Role::with('permissions')->get();
         $permissions = Permission::with('roles')->get();
-        
-        
+       
         //send disabled user 
         $userstrashed = User::orderBy('id', 'DESC')->onlyTrashed()->get();
         

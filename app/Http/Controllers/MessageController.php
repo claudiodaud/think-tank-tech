@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use App\Message;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class MessageController extends Controller
 {
     public function __construct()
-    {
-          $this->middleware('auth');
+    {           
+           $this->middleware('auth');
     }
     /**
      * Display a listing of the resource.
@@ -20,21 +18,30 @@ class RoleController extends Controller
      */
     public function index()
     {
-        
-        $roles = Role::with('users','permissions')->orderBy('id', 'Asc')->paginate(10);
-        $rolestrashed = Role::orderBy('id', 'DESC')->onlyTrashed()->get();
+        // no puedo usar $message por que es una variable reservada de laravel
+        $msgsent = Message::where('from', auth()->user()->id)->orderBy('id', 'Asc')->paginate(10);
+        $msgreceived = Message::where('to', auth()->user()->id)->orderBy('id', 'Asc')->paginate(10); 
+        $msgtrashed = Message::orderBy('id', 'DESC')->onlyTrashed()->get();
 
         return [
-            'pagination' => [
-                'total'         => $roles->total(),
-                'current_page'  => $roles->currentPage(),
-                'per_page'      => $roles->perPage(),
-                'last_page'     => $roles->lastPage(),
-                'from'          => $roles->firstItem(),
-                'to'            => $roles->lastItem(),
+            'pagination_msgsent' => [
+                'total'         => $msgsent->total(),
+                'current_page'  => $msgsent->currentPage(),
+                'per_page'      => $msgsent->perPage(),
+                'last_page'     => $msgsent->lastPage(),
+                'from'          => $msgsent->firstItem(),
+                'to'            => $msgsent->lastItem(),
             ],
-            'roles' => $roles,
-            'rolestrashed' => $rolestrashed
+            'pagination_msgreceived' => [
+                'total'         => $msgreceived->total(),
+                'current_page'  => $msgreceived->currentPage(),
+                'per_page'      => $msgreceived->perPage(),
+                'last_page'     => $msgreceived->lastPage(),
+                'from'          => $msgreceived->firstItem(),
+                'to'            => $msgreceived->lastItem(),
+            ],
+            'msg' => $msg,
+            'msgtrashed' => $msgtrashed
         ];
     }
 
@@ -59,20 +66,19 @@ class RoleController extends Controller
        if (isset($request)) {
 
             $this->validate($request, [
-                'name' => 'required',
-                'slug' => 'required',
-                'description' => 'required'
+                'from' => 'required',
+                'to' => 'required',
+                'message' => 'required'
             ]);
 
             // create a new Role object
-            $role           = new Role;
-            $role->name     = $request->input('name');
-            $role->slug    = $request->input('slug');
-            $role->description = bcrypt($request->input('description'));
-            $role->save();
+            $msg            = new Message;
+            $msg->from      = auth()->user()->id;
+            $msg->to        = $request->to;
+            $msg->message   = $request->message;
+            $msg->save();
 
-            $role->user()->sync($request->users);
-            $role->permissions()->sync($request->permissions);
+            // TO DO crear la notificacion     
                   
             return true;
        }
@@ -89,8 +95,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        $role = Role::find($id);
-        return $role;
+        $msg = Message::find($id);
+        return $msg;
     }
 
     /**
@@ -101,10 +107,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        
-        
-        return $role ;
+        $msg = Message::find($id);
+        return $msg ;
     }
 
     /**
@@ -118,18 +122,19 @@ class RoleController extends Controller
     {
        if (isset($request)) {
             $this->validate($request, [
-            'name' => 'required',
-            'slug' => 'required',
-            'description' => 'required'
+            'from' => 'required',
+            'to' => 'required',
+            'message' => 'required'
         ]);
 
-        Role::find($id)->update($request->all());
+        Message::find($id)->update($request->all());
 
-        $user->roles()->sync($request->users);
-        $user->roles()->sync($request->permissions);
+        // TO DO relationship with users
 
         return true;
+
        }
+
       return false;
     }
 
@@ -141,8 +146,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::findOrFail($id);
-        $role->delete();
+        $msg = Message::findOrFail($id);
+        $msg->delete();
 
         return true;
     }
@@ -154,8 +159,8 @@ class RoleController extends Controller
      */
     public function restore($id)
     {
-        $role = Role::findOrFail($id);
-        $role->restore();
+        $msg = Message::findOrFail($id);
+        $msg->restore();
 
         return true;
     }
@@ -168,8 +173,8 @@ class RoleController extends Controller
     */
     public function forcedelete($id)
     {
-        $role = Role::findOrFail($id);
-        $role->forceDelete();
+        $msg = Message::findOrFail($id);
+        $msg->forceDelete();
         
         return true;
     }

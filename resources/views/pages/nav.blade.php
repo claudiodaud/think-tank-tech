@@ -28,7 +28,9 @@
                 @else
                     <li class="nav-item pt-2"><a class="nav-link" href="/users">Usuarios</a> </li>
                     <li class="nav-item pt-2"><a class="nav-link" href="/roles">Roles</a> </li>
-                    <li class="nav-item pt-2"><a class="nav-link" href="permissions">Permisos</a> </li>
+                    <li class="nav-item pt-2"><a class="nav-link" href="/permissions">Permisos</a> </li>
+                    <li class="nav-item pt-2"><a class="nav-link" href="#">Enviar Mensaje</a> </li>
+                    <li class="nav-item pt-2"><a class="nav-link" href="#">Notificaciones <span class="badge badge-primary">1</span></a> </li>
                    
                     <li class="nav-link dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
