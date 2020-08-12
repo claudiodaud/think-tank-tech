@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Auth::routes();
+
 Route::get('/{path?}', [
     'uses' => 'HomeController@spa',
     'as' => 'react',
@@ -20,5 +23,5 @@ Route::get('/{path?}', [
    
 ]);
 
-Auth::routes();
+
 
