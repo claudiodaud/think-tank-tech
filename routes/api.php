@@ -37,9 +37,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 	Route::delete('permission/{permission}/forcedelete','PermissionController@forcedelete');
 	Route::delete('permission/{permission}/restore','PermissionController@restore');
 
+	
 	//messages routes
 	Route::resource('messages','MessageController');
 	Route::delete('messages/{message}/forcedelete','MessageController@forcedelete');
 	Route::delete('messages/{message}/restore','MessageController@restore');
-
 });
+

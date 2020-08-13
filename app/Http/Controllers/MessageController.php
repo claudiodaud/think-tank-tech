@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use App\Notifications\MessageSent;
+use App\User;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -22,6 +24,8 @@ class MessageController extends Controller
         $msgsent = Message::where('from', auth()->user()->id)->orderBy('id', 'Asc')->paginate(10);
         $msgreceived = Message::where('to', auth()->user()->id)->orderBy('id', 'Asc')->paginate(10); 
         $msgtrashed = Message::orderBy('id', 'DESC')->onlyTrashed()->get();
+
+        dd($msgsent);
 
         return [
             'pagination_msgsent' => [
@@ -66,8 +70,7 @@ class MessageController extends Controller
        if (isset($request)) {
 
             $this->validate($request, [
-                'from' => 'required',
-                'to' => 'required',
+                'to' => 'required|exist:users,id',
                 'message' => 'required'
             ]);
 
@@ -78,8 +81,10 @@ class MessageController extends Controller
             $msg->message   = $request->message;
             $msg->save();
 
-            // TO DO crear la notificacion     
-                  
+            $recipient_id = User::find($request->to);
+
+            $recipient_id->notify(new MessageSent($msg));   
+               
             return true;
        }
 
