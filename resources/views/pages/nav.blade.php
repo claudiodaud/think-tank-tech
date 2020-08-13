@@ -30,7 +30,16 @@
                     <li class="nav-item pt-2"><a class="nav-link" href="/roles">Roles</a> </li>
                     <li class="nav-item pt-2"><a class="nav-link" href="/permissions">Permisos</a> </li>
                     <li class="nav-item pt-2"><a class="nav-link" href="/messages">Mensajes</a> </li>
-                    <li class="nav-item pt-2"><a class="nav-link" href="/notifications">Notificaciones<span class="badge badge-primary">1</span></a> </li>
+                    <li class="nav-item pt-2">
+                        <a class="nav-link" href="/notifications">Notificaciones
+                            @if($count = auth()->user()->unreadNotifications->count())
+                            
+                             <span class="badge badge-primary">{{ $count }}</span>
+                                
+                            @endif    
+                                      
+                        </a> 
+                    </li>
                    
                     <li class="nav-link dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

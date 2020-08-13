@@ -42,5 +42,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 	Route::resource('messages','MessageController');
 	Route::delete('messages/{message}/forcedelete','MessageController@forcedelete');
 	Route::delete('messages/{message}/restore','MessageController@restore');
+
+	Route::get('notifications','NotificationController@index');
+	Route::patch('notifications/{id}/read','NotificationController@read');
+	Route::patch('notifications/{id}/unread','NotificationController@unread');
+	Route::delete('notifications/{id}','NotificationController@destroy');
+	
 });
 
